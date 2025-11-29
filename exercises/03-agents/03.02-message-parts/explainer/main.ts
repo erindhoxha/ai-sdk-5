@@ -4,7 +4,7 @@ import { z } from 'zod';
 import * as fsTools from './file-system-functionality.ts';
 
 const PROMPT = `
-  Write me a poem about a pirate in pirate.md
+  Write me a poem about a pirate in pirate.md and then delete it please
 `;
 
 const result = streamText({
