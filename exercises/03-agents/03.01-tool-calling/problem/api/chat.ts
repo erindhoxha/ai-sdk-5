@@ -2,8 +2,11 @@ import { google } from '@ai-sdk/google';
 import {
   convertToModelMessages,
   streamText,
+  tool,
   type UIMessage,
 } from 'ai';
+import * as fsTools from './file-system-functionality.ts';
+import z from 'zod';
 
 export const POST = async (req: Request): Promise<Response> => {
   const body: { messages: UIMessage[] } = await req.json();
@@ -29,7 +32,22 @@ export const POST = async (req: Request): Promise<Response> => {
       Use markdown files to store information.
     `,
     // TODO: add the tools to the streamText call,
-    tools: TODO,
+    tools: {
+      writeFile: tool({
+        description: 'Write to a file',
+        inputSchema: z.object({
+          path: z
+            .string()
+            .describe('The path to the file to create'),
+          content: z
+            .string()
+            .describe('The content of the file to create'),
+        }),
+        execute: async ({ path, content }) => {
+          return fsTools.writeFile(path, content);
+        },
+      }),
+    },
     // TODO: add a custom stop condition to the streamText call
     // to force the agent to stop after 10 steps have been taken
     stopWhen: TODO,
