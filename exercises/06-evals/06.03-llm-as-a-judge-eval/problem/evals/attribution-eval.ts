@@ -34,16 +34,38 @@ export const attributionToChainOfThoughtPaper = createScorer<
     const result = await generateObject({
       model: google('gemini-2.0-flash'),
       system: ATTRIBUTION_PROMPT,
-      messages: TODO, // TODO: Pass the chain of thought paper, the question and the answer given
-      schema: TODO, // TODO: Define the schema for the response
+      messages: [
+        {
+          role: 'user',
+          content: [
+            {
+              type: 'file',
+              data: chainOfThoughtPaper,
+              mediaType: 'application/pdf',
+            },
+            {
+              type: 'text',
+              text: `The answer you are evaluating is:
+
+            ${output}
+
+            The original question posed was:
+
+            ${input}`,
+            },
+          ],
+        },
+      ],
+      schema: z.object({
+        feedback: z
+          .string()
+          .describe(
+            'Detailed feedback on the attribution of the answer to the paper.',
+          ),
+        score: z.enum(['A', 'B', 'C', 'D']),
+      }),
     });
 
-    // NOTE: it's important to use a string-based score for the
-    // LLM, since LLM's are notorious for being biased towards
-    // different numbers.
-
-    // So, we get the LLM to return a string score, and then
-    // we map it to a number.
     const scoreMap = {
       A: 1,
       B: 0.5,

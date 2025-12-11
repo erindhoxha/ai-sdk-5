@@ -54,5 +54,18 @@ evalite('Chat Title Generation', {
 
     return result.text;
   },
-  scorers: [],
+  scorers: [
+    {
+      name: 'Exact Match',
+      scorer: ({ output, expected }) => {
+        console.log(
+          'Comparing output:',
+          output,
+          'with expected:',
+          expected,
+        );
+        return output.trim() === expected?.trim() ? 1 : 0;
+      },
+    },
+  ],
 });

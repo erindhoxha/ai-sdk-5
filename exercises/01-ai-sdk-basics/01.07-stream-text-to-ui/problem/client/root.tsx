@@ -6,7 +6,7 @@ import { useChat } from '@ai-sdk/react';
 
 const App = () => {
   // TODO: use the useChat hook to get the messages and sendMessage function
-  const { messages, sendMessage } = useChat();
+  const { messages, sendMessage } = useChat({});
 
   const [input, setInput] = useState(
     `What's the capital of France?`,

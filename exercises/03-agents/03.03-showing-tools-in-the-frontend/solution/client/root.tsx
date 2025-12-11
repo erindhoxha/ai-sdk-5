@@ -12,6 +12,8 @@ const App = () => {
     'Tell me what todo items I have today.',
   );
 
+  console.log(messages);
+
   return (
     <Wrapper>
       {messages.map((message) => (

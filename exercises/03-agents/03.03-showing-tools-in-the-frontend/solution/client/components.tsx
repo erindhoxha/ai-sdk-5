@@ -29,6 +29,7 @@ export const Message = ({
       return '';
     })
     .join('');
+
   return (
     <div className="flex flex-col gap-2">
       <div className="prose prose-invert my-6">
