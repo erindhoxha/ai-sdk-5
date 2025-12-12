@@ -11,6 +11,8 @@ const App = () => {
     `What's the capital of France?`,
   );
 
+  console.log('MESSAGES', messages);
+
   return (
     <Wrapper>
       {messages.map((message) => (

@@ -9,6 +9,6 @@ const stream = streamText({
     'Give me the first paragraph of a story about an imaginary planet.',
 });
 
-for await (const chunk of stream.textStream) {
-  process.stdout.write(chunk);
+for await (const chunk of stream.toUIMessageStream()) {
+  console.log(chunk);
 }
